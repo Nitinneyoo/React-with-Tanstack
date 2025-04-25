@@ -50,8 +50,7 @@ const fetchSolutionData = async (): Promise<SolutionDetails> => {
         scenario:
           "Detects motion in off-limits areas and activates deterrent alerts to prevent break-ins.",
         name: "Ashwanee Gupta",
-        description:
-          "I have been using RoboGuard for a few months now, and this is the best product I have ever used. It has changed my life!",
+        description:"This Robotics Guard is a game-changer for our security operations. The AI capabilities are impressive, and the real-time alerts have made a significant difference in our response times.",
       },
 
       {
@@ -60,7 +59,7 @@ const fetchSolutionData = async (): Promise<SolutionDetails> => {
           "Provides real-time surveillance and crowd management during large public events, ensuring safety and security.",
         name: "Ankit Singh",
         description:
-          "I have been using RoboGuard for a few months now, and this is the best product I have ever used. It has changed my life!",
+          "Robotics Guard has transformed our security operations. The AI capabilities are impressive, and the real-time alerts have made a significant difference in our response times.",
       },
       {
         title: "Residential Neighborhood Patrol",
@@ -68,7 +67,7 @@ const fetchSolutionData = async (): Promise<SolutionDetails> => {
           "Autonomously patrols residential areas, providing peace of mind to homeowners and deterring potential threats.",
         name: "Shivam Tiwari",
         description:
-          "I have been using RoboGuard for a few months now, and this is the best product I have ever used. It has changed my life!",
+          "We have been using Robotics Guard for a few months now, and this is the best product I have ever used. It has changed my life!",
       },
       {
         title: "Construction Site Security",
@@ -76,7 +75,7 @@ const fetchSolutionData = async (): Promise<SolutionDetails> => {
           "Monitors construction sites for unauthorized access and equipment theft, ensuring safety and security.",
         name: "Ravi Kumar",
         description:
-          "I have been using RoboGuard for a few months now, and this is the best product I have ever used. It has changed my life!",
+          "Our Organization has been using Robotics Guard for a few months now, and this is the best product I have ever used. It has changed my life!",  
       },
     ],
     impact: [
@@ -187,12 +186,6 @@ const SolutionPage: FC = () => {
       <UseCaseCards useCases={data.useCases} />
       <ImpactSection impact={data.impact} />
       <div className="text-center py-8">
-        <Link
-          to="/product"
-          className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
-        >
-          Back to Product Overview
-        </Link>
         <div className="mt-8 container mx-auto px-4 flex justify-center">
           <Carousel className="w-full max-w-xs">
             <CarouselContent>
@@ -218,6 +211,12 @@ const SolutionPage: FC = () => {
             <CarouselNext />
           </Carousel>
         </div>
+        <Link
+          to="/product"
+          className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition mt-4"
+        >
+          Back to Product Overview
+        </Link>
       </div>
     </div>
   );

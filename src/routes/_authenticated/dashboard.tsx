@@ -1,61 +1,96 @@
-import { createFileRoute, useRouter } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  useRouter,
+  type Router,
+} from "@tanstack/react-router";
 import { useAuth } from "@/context/auth";
+import { Dock, DockIcon } from "@/components/magicui/dock";
+import { Twitter, Linkedin, Github, Instagram, Mail } from "lucide-react";
+import { motion } from "framer-motion";
+import type { FC } from "react";
 
-export const Route = createFileRoute("/_authenticated/dashboard")({
-  component: Dashboard,
-});
+// Define types for useAuth hook
+interface AuthContext {
+  signOut: () => void;
+}
 
-function Dashboard() {
-  const { signOut } = useAuth();
-  const router = useRouter();
+// Define props for Dock and DockIcon (if not provided by magicui)
+interface DockProps {
+  className?: string;
+}
 
-  const handleLogout = () => {
+interface DockIconProps {
+  children: React.ReactNode;
+}
+
+const Dashboard: FC = () => {
+  const { signOut } = useAuth() as AuthContext;
+  const router: Router = useRouter();
+
+  const handleLogout = (): void => {
     signOut();
     router.invalidate();
     router.navigate({ to: "/login" });
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
       {/* Header */}
-      <header className="bg-white shadow-md">
+      <header className="bg-white shadow-lg">
         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-gray-800">Robot Dashboard</h1>
-          <button
+          <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
+            Robot Dashboard
+          </h1>
+          <motion.button
             type="button"
             onClick={handleLogout}
-            className="bg-gradient-to-r from-red-500 to-rose-600 text-white font-semibold py-2 px-4 rounded-md hover:from-red-600 hover:to-rose-700 transition duration-300"
+            className="bg-gradient-to-r from-red-500 to-rose-600 text-white font-semibold py-2 px-6 rounded-lg hover:from-red-600 hover:to-rose-700 transition duration-300"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            animate={{ opacity: [1, 0.8, 1] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
           >
             Sign Out
-          </button>
+          </motion.button>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto py-8 px-4 sm:px SIX lg:px-8">
+      <main className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="space-y-12">
           {/* Welcome Section */}
-          <section className="bg-white p-8 rounded-xl shadow-lg">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+          <motion.section
+            className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
               Welcome to the Robot Dashboard
             </h2>
-            <p className="text-gray-600">
-              Explore the fascinating world of robotics! Learn how robots work,
-              their functions, mechanics, and how they compare to one another.
+            <p className="text-gray-700 leading-relaxed">
+              Dive into the exciting world of robotics! Discover how robots
+              operate, their diverse functions, intricate mechanics, and how
+              they stack up against one another.
             </p>
-          </section>
+          </motion.section>
 
           {/* How Robots Work */}
-          <section className="bg-white p-8 rounded-xl shadow-lg">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+          <motion.section
+            className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
               How Robots Work
             </h2>
-            <p className="text-gray-600 mb-4">
+            <p className="text-gray-700 mb-4 leading-relaxed">
               Robots are intelligent machines that interact with their
               environment through a combination of <strong>sensors</strong>,{" "}
               <strong>actuators</strong>, and <strong>control systems</strong>:
             </p>
-            <ul className="list-disc pl-6 text-gray-600 space-y-2">
+            <ul className="list-disc pl-6 text-gray-700 space-y-2">
               <li>
                 <strong>Sensors</strong>: Detect environmental data (e.g.,
                 cameras, LIDAR, ultrasonic sensors) to perceive surroundings.
@@ -70,18 +105,23 @@ function Dashboard() {
                 onboard computers).
               </li>
             </ul>
-          </section>
+          </motion.section>
 
           {/* Robot Functionality */}
-          <section className="bg-white p-8 rounded-xl shadow-lg">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+          <motion.section
+            className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
               Robot Functionality
             </h2>
-            <p className="text-gray-600 mb-4">
+            <p className="text-gray-700 mb-4 leading-relaxed">
               Robots perform a wide range of tasks depending on their design and
               purpose:
             </p>
-            <ul className="list-disc pl-6 text-gray-600 space-y-2">
+            <ul className="list-disc pl-6 text-gray-700 space-y-2">
               <li>
                 <strong>Navigation</strong>: Autonomous movement in environments
                 (e.g., self-driving cars, delivery drones).
@@ -95,18 +135,23 @@ function Dashboard() {
                 systems (e.g., chatbots, social robots).
               </li>
             </ul>
-          </section>
+          </motion.section>
 
           {/* Robot Mechanics */}
-          <section className="bg-white p-8 rounded-xl shadow-lg">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+          <motion.section
+            className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
               Robot Mechanics
             </h2>
-            <p className="text-gray-600 mb-4">
+            <p className="text-gray-700 mb-4 leading-relaxed">
               The mechanical design of robots determines their physical
               capabilities:
             </p>
-            <ul className="list-disc pl-6 text-gray-600 space-y-2">
+            <ul className="list-disc pl-6 text-gray-700 space-y-2">
               <li>
                 <strong>Joints</strong>: Enable rotation or linear movement
                 (e.g., revolute joints for arms, prismatic joints for sliding).
@@ -120,106 +165,142 @@ function Dashboard() {
                 (e.g., aluminum, carbon fiber) ensure efficiency and strength.
               </li>
             </ul>
-          </section>
+          </motion.section>
 
           {/* Robot Comparison */}
-          <section className="bg-white p-8 rounded-xl shadow-lg">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+          <motion.section
+            className="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
               Comparison of Robots
             </h2>
-            <p className="text-gray-600 mb-4">
+            <p className="text-gray-700 mb-4 leading-relaxed">
               Different robots serve unique purposes. Here's a comparison:
             </p>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-gray-100">
-                    <th className="p-4 font-semibold text-gray-800">Type</th>
-                    <th className="p-4 font-semibold text-gray-800">
+                    <th className="p-4 font-semibold text-gray-900">Type</th>
+                    <th className="p-4 font-semibold text-gray-900">
                       Primary Use
                     </th>
-                    <th className="p-4 font-semibold text-gray-800">
+                    <th className="p-4 font-semibold text-gray-900">
                       Key Features
                     </th>
-                    <th className="p-4 font-semibold text-gray-800">
+                    <th className="p-4 font-semibold text-gray-900">
                       Examples
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b">
-                    <td className="p-4 text-gray-600">Industrial</td>
-                    <td className="p-4 text-gray-600">Manufacturing</td>
-                    <td className="p-4 text-gray-600">
+                  <tr className="border-b hover:bg-gray-50 transition-colors">
+                    <td className="p-4 text-gray-700">Industrial</td>
+                    <td className="p-4 text-gray-700">Manufacturing</td>
+                    <td className="p-4 text-gray-700">
                       High precision, repetitive tasks
                     </td>
-                    <td className="p-4 text-gray-600">KUKA, FANUC</td>
+                    <td className="p-4 text-gray-700">KUKA, FANUC</td>
                   </tr>
-                  <tr className="border-b">
-                    <td className="p-4 text-gray-600">Humanoid</td>
-                    <td className="p-4 text-gray-600">Research, Assistance</td>
-                    <td className="p-4 text-gray-600">
+                  <tr className="border-b hover:bg-gray-50 transition-colors">
+                    <td className="p-4 text-gray-700">Humanoid</td>
+                    <td className="p-4 text-gray-700">Research, Assistance</td>
+                    <td className="p-4 text-gray-700">
                       Human-like movement, interaction
                     </td>
-                    <td className="p-4 text-gray-600">
+                    <td className="p-4 text-gray-700">
                       Boston Dynamics Atlas, SoftBank Pepper
                     </td>
                   </tr>
-                  <tr className="border-b">
-                    <td className="p-4 text-gray-600">Service</td>
-                    <td className="p-4 text-gray-600">Domestic, Healthcare</td>
-                    <td className="p-4 text-gray-600">
+                  <tr className="border-b hover:bg-gray-50 transition-colors">
+                    <td className="p-4 text-gray-700">Service</td>
+                    <td className="p-4 text-gray-700">Domestic, Healthcare</td>
+                    <td className="p-4 text-gray-700">
                       Autonomy, user-friendly interfaces
                     </td>
-                    <td className="p-4 text-gray-600">
+                    <td className="p-4 text-gray-700">
                       Roomba, Da Vinci Surgical System
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-          </section>
+          </motion.section>
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-gray-800 text-white py-8">
+      {/* Footer */}    
+      <footer className="bg-gray-900 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-4 md:mb-0">
-              <p className="text-sm">
-                &copy; 2025 RobotTech Inc. All rights reserved.
+            {/* <div className="mb-6 md:mb-0">
+              <p className="text-sm font-medium ">
+                © 2025 RobotTech Inc. All rights reserved.
               </p>
-            </div>
-            <div className="flex space-x-6">
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-white transition duration-300"
-              >
-                Twitter
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-white transition duration-300"
-              >
-                LinkedIn
-              </a>
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-white transition duration-300"
-              >
-                GitHub
-              </a>
-            </div>
+            </div> */}
+            <Dock className="bg-gray-800/50 backdrop-blur-md rounded-full p-2 shadow-lg">
+              <DockIcon>
+                <a
+                  href="https://twitter.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-white transition duration-300 p-2 rounded-full hover:bg-gray-700/50 hover:scale-110"
+                >
+                  <Twitter className="h-6 w-6" />
+                </a>
+              </DockIcon>
+              <DockIcon>
+                <a
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-white transition duration-300 p-2 rounded-full hover:bg-gray-700/50 hover:scale-110"
+                >
+                  <Linkedin className="h-6 w-6" />
+                </a>
+              </DockIcon>
+              <DockIcon>
+                <a
+                  href="https://github.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-white transition duration-300 p-2 rounded-full hover:bg-gray-700/50 hover:scale-110"
+                >
+                  <Github className="h-6 w-6" />
+                </a>
+              </DockIcon>
+              <DockIcon>
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-white transition duration-300 p-2 rounded-full hover:bg-gray-700/50 hover:scale-110"
+                >
+                  <Instagram className="h-6 w-6" />
+                </a>
+              </DockIcon>
+              <DockIcon>
+                <a
+                  href="mailto:?subject=Check out Robot Dashboard&body=Explore the world of robotics: https://robotdashboard.com"
+                  className="text-gray-300 hover:text-white transition duration-300 p-2 rounded-full hover:bg-gray-700/50 hover:scale-110"
+                >
+                  <Mail className="h-6 w-6" />
+                </a>
+              </DockIcon>
+            </Dock>
           </div>
         </div>
       </footer>
     </div>
   );
-}
+};
+
+export default Dashboard;
+
+// Define Route after Dashboard
+export const Route = createFileRoute("/_authenticated/dashboard")({
+  component: Dashboard,
+});
