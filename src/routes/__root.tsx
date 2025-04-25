@@ -109,6 +109,13 @@ const RootComponent: React.FC = () => {
             >
               Details
             </Link>
+            <Link
+              to="/login"
+              className="block px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 transition-colors [&.active]:bg-blue-600 [&.active]:font-bold"
+              onClick={toggleMobileMenu}
+            >
+              Login
+            </Link>
           </div>
         )}
       </nav>
