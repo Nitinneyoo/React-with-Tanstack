@@ -13,9 +13,12 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as SolutionImport } from './routes/solution'
 import { Route as ProductImport } from './routes/product'
+import { Route as LoginImport } from './routes/login'
 import { Route as DetailsImport } from './routes/details'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
+import { Route as AuthenticatedDashboardImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedAuthenticatedImport } from './routes/_authenticated/_authenticated'
 
 // Create/Update Routes
 
@@ -28,6 +31,12 @@ const SolutionRoute = SolutionImport.update({
 const ProductRoute = ProductImport.update({
   id: '/product',
   path: '/product',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LoginRoute = LoginImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -48,6 +57,19 @@ const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any)
+
+const AuthenticatedDashboardRoute = AuthenticatedDashboardImport.update({
+  id: '/_authenticated/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthenticatedAuthenticatedRoute = AuthenticatedAuthenticatedImport.update(
+  {
+    id: '/_authenticated/_authenticated',
+    getParentRoute: () => rootRoute,
+  } as any,
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -74,6 +96,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DetailsImport
       parentRoute: typeof rootRoute
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginImport
+      parentRoute: typeof rootRoute
+    }
     '/product': {
       id: '/product'
       path: '/product'
@@ -88,6 +117,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SolutionImport
       parentRoute: typeof rootRoute
     }
+    '/_authenticated/_authenticated': {
+      id: '/_authenticated/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedAuthenticatedImport
+      parentRoute: typeof rootRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -97,16 +140,22 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/details': typeof DetailsRoute
+  '/login': typeof LoginRoute
   '/product': typeof ProductRoute
   '/solution': typeof SolutionRoute
+  '': typeof AuthenticatedAuthenticatedRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/details': typeof DetailsRoute
+  '/login': typeof LoginRoute
   '/product': typeof ProductRoute
   '/solution': typeof SolutionRoute
+  '': typeof AuthenticatedAuthenticatedRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
 }
 
 export interface FileRoutesById {
@@ -114,16 +163,44 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/details': typeof DetailsRoute
+  '/login': typeof LoginRoute
   '/product': typeof ProductRoute
   '/solution': typeof SolutionRoute
+  '/_authenticated/_authenticated': typeof AuthenticatedAuthenticatedRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/details' | '/product' | '/solution'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/details'
+    | '/login'
+    | '/product'
+    | '/solution'
+    | ''
+    | '/dashboard'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/details' | '/product' | '/solution'
-  id: '__root__' | '/' | '/about' | '/details' | '/product' | '/solution'
+  to:
+    | '/'
+    | '/about'
+    | '/details'
+    | '/login'
+    | '/product'
+    | '/solution'
+    | ''
+    | '/dashboard'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/details'
+    | '/login'
+    | '/product'
+    | '/solution'
+    | '/_authenticated/_authenticated'
+    | '/_authenticated/dashboard'
   fileRoutesById: FileRoutesById
 }
 
@@ -131,16 +208,22 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   DetailsRoute: typeof DetailsRoute
+  LoginRoute: typeof LoginRoute
   ProductRoute: typeof ProductRoute
   SolutionRoute: typeof SolutionRoute
+  AuthenticatedAuthenticatedRoute: typeof AuthenticatedAuthenticatedRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   DetailsRoute: DetailsRoute,
+  LoginRoute: LoginRoute,
   ProductRoute: ProductRoute,
   SolutionRoute: SolutionRoute,
+  AuthenticatedAuthenticatedRoute: AuthenticatedAuthenticatedRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
 }
 
 export const routeTree = rootRoute
@@ -156,8 +239,11 @@ export const routeTree = rootRoute
         "/",
         "/about",
         "/details",
+        "/login",
         "/product",
-        "/solution"
+        "/solution",
+        "/_authenticated/_authenticated",
+        "/_authenticated/dashboard"
       ]
     },
     "/": {
@@ -169,11 +255,20 @@ export const routeTree = rootRoute
     "/details": {
       "filePath": "details.tsx"
     },
+    "/login": {
+      "filePath": "login.tsx"
+    },
     "/product": {
       "filePath": "product.tsx"
     },
     "/solution": {
       "filePath": "solution.tsx"
+    },
+    "/_authenticated/_authenticated": {
+      "filePath": "_authenticated/_authenticated.tsx"
+    },
+    "/_authenticated/dashboard": {
+      "filePath": "_authenticated/dashboard.tsx"
     }
   }
 }

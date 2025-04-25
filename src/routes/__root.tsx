@@ -1,5 +1,4 @@
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { useState } from "react";
 import { Menu, X } from "lucide-react"; // Assuming Lucide icons are installed for hamburger/close icons
 
@@ -50,6 +49,13 @@ const RootComponent: React.FC = () => {
               className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:scale-105 transition-all duration-200 [&.active]:bg-blue-600 [&.active]:font-bold"
             >
               Details
+            </Link>
+
+            <Link
+              to="/login"
+              className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:scale-105 transition-all duration-200 [&.active]:bg-blue-600 [&.active]:font-bold"
+            >
+              Login
             </Link>
           </div>
 
@@ -109,7 +115,6 @@ const RootComponent: React.FC = () => {
       <main>
         <Outlet />
       </main>
-      <TanStackRouterDevtools />
     </>
   );
 };

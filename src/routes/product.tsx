@@ -1,4 +1,3 @@
-
 import { createFileRoute, Link } from "@tanstack/react-router";
 import type { FC, MemoExoticComponent } from "react";
 import { memo } from "react";
@@ -85,13 +84,12 @@ const AnimatedElement: FC<{
     : "opacity-0 -translate-x-6";
 
   const styles =
-    Tag === "p" ? `${baseStyles} ${paragraphStyles}` : `${baseStyles} ${headingStyles}`;
+    Tag === "p"
+      ? `${baseStyles} ${paragraphStyles}`
+      : `${baseStyles} ${headingStyles}`;
 
   return (
-    <Tag
-      ref={ref}
-      className={`${className} ${styles}`}
-    >
+    <Tag ref={ref} className={`${className} ${styles}`}>
       {children}
     </Tag>
   );
@@ -127,7 +125,10 @@ const HeroSection = memo(
           <AnimatedElement as="h2" className="text-4xl font-bold text-gray-800">
             Meet {name}
           </AnimatedElement>
-          <AnimatedElement as="p" className="mt-4 text-gray-600 leading-relaxed">
+          <AnimatedElement
+            as="p"
+            className="mt-4 text-gray-600 leading-relaxed"
+          >
             {description}
           </AnimatedElement>
           <Link
@@ -169,7 +170,10 @@ const FeatureCard = memo(
 const ProductDetailsSection = memo(({ features }: { features: Feature[] }) => (
   <section className="py-12 bg-gray-50">
     <div className="container mx-auto px-4">
-      <AnimatedElement as="h3" className="text-3xl font-bold text-center text-gray-800 mb-8">
+      <AnimatedElement
+        as="h3"
+        className="text-3xl font-bold text-center text-gray-800 mb-8"
+      >
         Product Details
       </AnimatedElement>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -185,7 +189,10 @@ const KeyFeaturesSection = memo(
   ({ keyFeatures }: { keyFeatures: string[] }) => (
     <section className="py-12 bg-white">
       <div className="container mx-auto px-4">
-        <AnimatedElement as="h3" className="text-3xl font-bold text-center text-gray-800 mb-8">
+        <AnimatedElement
+          as="h3"
+          className="text-3xl font-bold text-center text-gray-800 mb-8"
+        >
           Key Features
         </AnimatedElement>
         <ul className="list-disc list-inside text-gray-600 space-y-4 max-w-2xl mx-auto">
@@ -206,7 +213,10 @@ const FutureImprovementsSection = memo(
   ({ futureImprovements }: { futureImprovements: string[] }) => (
     <section className="py-12 bg-gray-50">
       <div className="container mx-auto px-4">
-        <AnimatedElement as="h3" className="text-3xl font-bold text-center text-gray-800 mb-8">
+        <AnimatedElement
+          as="h3"
+          className="text-3xl font-bold text-center text-gray-800 mb-8"
+        >
           Future Improvements
         </AnimatedElement>
         <ul className="list-disc list-inside text-gray-600 space-y-4 max-w-2xl mx-auto">
