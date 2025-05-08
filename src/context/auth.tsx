@@ -2,6 +2,7 @@ import { createContext, useContext, useState, type ReactNode } from 'react';
 
 // Define the shape of the auth context
 interface AuthContextType {
+  logout(): unknown;
   isAuthenticated: boolean;
   signIn: (token: string) => void;
   signOut: () => void;

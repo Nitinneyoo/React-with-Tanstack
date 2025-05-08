@@ -1,23 +1,76 @@
-import { createFileRoute, redirect, Outlet } from '@tanstack/react-router';
-import { useAuth } from '@/context/auth';// Adjust the import path as necessary
 
-export const Route = createFileRoute('/_authenticated/_authenticated')<{
-  context: { auth: { isAuthenticated: boolean } };
-}>({
-  beforeLoad: async ({ context }) => {
-    const { isAuthenticated } = context.auth || useAuth();
-    if (!isAuthenticated) {
+import {
+  Link,
+  Outlet,
+  createFileRoute,
+  redirect,
+  useRouter,
+} from '@tanstack/react-router'
+
+import { useAuth } from '@/context/auth'
+
+export const Route = createFileRoute('/_authenticated/_authenticated')({
+  beforeLoad: ({ context, location }) => {
+    if (!context.auth.isAuthenticated) {
       throw redirect({
         to: '/login',
         search: {
-          redirect: window.location.href, // Save the attempted URL
+          redirect: location.href,
         },
-      });
+      })
     }
-  },
-  component: () => (
-    <div>
+  },  
+  component: AuthLayout,
+})
+
+function AuthLayout() {
+  const router = useRouter()
+  const navigate = Route.useNavigate()
+  const auth = useAuth()
+
+  const handleLogout = () => {
+    if (window.confirm('Are you sure you want to logout?')) {
+      auth.signOut().then(() => {
+        router.invalidate().finally(() => {
+          navigate({ to: '/' })
+        })
+      })
+    }
+  }
+
+  return (
+    <div className="p-2 h-full">
+      <h1>Authenticated Route</h1>
+      <p>This route's content is only visible to authenticated users.</p>
+      <ul className="py-2 flex gap-2">
+        <li>
+          <Link
+            to="/dashboard"
+            className="hover:underline data-[status='active']:font-semibold"
+          >
+            Dashboard
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/invoices"
+            className="hover:underline data-[status='active']:font-semibold"
+          >
+            Invoices
+          </Link>
+        </li>
+        <li>
+          <button
+            type="button"
+            className="hover:underline"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+        </li>
+      </ul>
+      <hr />
       <Outlet />
     </div>
-  ),
-});
+  )
+}

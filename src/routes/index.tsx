@@ -73,7 +73,7 @@ const HomeAnimatedElement: FC<{
 // Reusable Components
 const Header = memo(({ name, tagline }: { name: string; tagline: string }) => (
   <header className="bg-blue-900 text-white py-6">
-    <div className="container mx-auto px-4 sm:px-6 flex flex-col mt-2">
+    <div className="container mx-auto px-2 sm:px-6 flex flex-col mt-2">
       <HomeAnimatedElement as="h1" className="text-3xl sm:text-4xl font-bold">
         {name}
       </HomeAnimatedElement>
@@ -105,7 +105,7 @@ const HeroSection = memo(
           </HomeAnimatedElement>
           <HomeAnimatedElement
             as="p"
-            className="mt-4 text-gray-600 text-base sm:text-lg leading-relaxed"
+            className="mt-4 text-gray-600 text-base sm:text-lg leading-relaxed flex"
           >
             {description}
           </HomeAnimatedElement>

@@ -24,7 +24,8 @@ interface DockIconProps {
 }
 
 const Dashboard: FC = () => {
-  const { signOut } = useAuth() as AuthContext;
+  const { signOut }  = useAuth() as AuthContext;
+  const auth = useAuth()
   const router: Router = useRouter();
 
   const handleLogout = (): void => {
@@ -48,7 +49,7 @@ const Dashboard: FC = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             animate={{ opacity: [1, 0.8, 1] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
+            transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
           >
             Sign Out
           </motion.button>
@@ -66,7 +67,7 @@ const Dashboard: FC = () => {
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Welcome to the Robot Dashboard
+              Welcome to the Robot Dashboard {auth.user}
             </h2>
             <p className="text-gray-700 leading-relaxed">
               Dive into the exciting world of robotics! Discover how robots
@@ -301,6 +302,6 @@ const Dashboard: FC = () => {
 export default Dashboard;
 
 // Define Route after Dashboard
-export const Route = createFileRoute("/_authenticated/dashboard")({
+export const Route = createFileRoute("/_authenticated/_auth/dashboard")({
   component: Dashboard,
 });
