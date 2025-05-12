@@ -5,34 +5,34 @@ import {
 } from "@tanstack/react-router";
 import { useAuth } from "@/context/auth";
 import { Dock, DockIcon } from "@/components/magicui/dock";
-import { Twitter, Linkedin, Github, Instagram, Mail } from "lucide-react";
+import { Twitter, Linkedin, Github, Instagram, Mail, LogOut } from "lucide-react";
 import { motion } from "framer-motion";
 import type { FC } from "react";
 
 // Define types for useAuth hook
 interface AuthContext {
-  signOut: () => void;
+  logout: () => Promise<void>;
 }
 
 // Define props for Dock and DockIcon (if not provided by magicui)
-interface DockProps {
-  className?: string;
-}
+// interface DockProps {
+//   className?: string;
+// }
 
-interface DockIconProps {
-  children: React.ReactNode;
-}
+// interface DockIconProps {
+//   children: React.ReactNode;
+// }
 
 const Dashboard: FC = () => {
-  const { signOut }  = useAuth() as AuthContext;
+  // const { logout }  = useAuth() as AuthContext;
   const auth = useAuth()
-  const router: Router = useRouter();
+  // const router: Router = useRouter();
 
-  const handleLogout = (): void => {
-    signOut();
-    router.invalidate();
-    router.navigate({ to: "/login" });
-  };
+  // const handleLogout = (): void => {
+  //   logout();
+  //   router.invalidate();
+  //   router.navigate({ to: "/" });
+  // };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
@@ -42,7 +42,7 @@ const Dashboard: FC = () => {
           <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
             Robot Dashboard
           </h1>
-          <motion.button
+          {/* <motion.button
             type="button"
             onClick={handleLogout}
             className="bg-gradient-to-r from-red-500 to-rose-600 text-white font-semibold py-2 px-6 rounded-lg hover:from-red-600 hover:to-rose-700 transition duration-300"
@@ -51,8 +51,8 @@ const Dashboard: FC = () => {
             animate={{ opacity: [1, 0.8, 1] }}
             transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
           >
-            Sign Out
-          </motion.button>
+            Log Out
+          </motion.button> */}
         </div>
       </header>
 

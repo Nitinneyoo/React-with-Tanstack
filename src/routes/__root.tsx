@@ -1,14 +1,26 @@
-import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
+import { createRootRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X } from "lucide-react"; // Assuming Lucide icons are installed for hamburger/close icons
+import { Menu, X } from "lucide-react";
 
-const RootComponent: React.FC = () => {
+import { useAuth } from "@/context/auth"; // Assuming Lucide icons are installed for hamburger/close icons
+
+export const Route = createRootRoute({
+  component: Root,
+});
+
+function Root() {
+  const { isAuthenticated } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+  const handleLogout = (): void => {
+    logout();
+    navigate({ to: "/" });
+  };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-
   return (
     <>
       <nav className="bg-gray-900 text-white sticky top-0 z-50 shadow-lg">
@@ -50,13 +62,36 @@ const RootComponent: React.FC = () => {
             >
               Details
             </Link>
-
-            <Link
-              to="/login"
-              className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:scale-105 transition-all duration-200 [&.active]:bg-blue-600 [&.active]:font-bold"
-            >
-              Login
-            </Link>
+            {isAuthenticated ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:scale-105 transition-all duration-200 [&.active]:bg-blue-600 [&.active]:font-bold"
+                >
+                  DashBoard
+                </Link>
+                <Link
+                  to="/fleet"
+                  className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:scale-105 transition-all duration-200 [&.active]:bg-blue-600 [&.active]:font-bold"
+                >
+                  Fleet
+                </Link>
+                {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
+                <button
+                  onClick={handleLogout}
+                  className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:scale-105 transition-all duration-200 [&.active]:bg-blue-600 [&.active]:font-bold"
+                >
+                  logout
+                </button>
+              </>
+            ) : (
+              <Link
+                to="/login"
+                className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:scale-105 transition-all duration-200 [&.active]:bg-blue-600 [&.active]:font-bold"
+              >
+                Login
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -124,8 +159,4 @@ const RootComponent: React.FC = () => {
       </main>
     </>
   );
-};
-
-export const Route = createRootRoute({
-  component: RootComponent,
-});
+}

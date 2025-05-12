@@ -18,11 +18,8 @@ import { Route as DetailsImport } from './routes/details'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 import { Route as AuthenticatedAuthenticatedImport } from './routes/_authenticated/_authenticated'
-import { Route as AuthenticatedAuthInvoicesImport } from './routes/_authenticated/_auth.invoices'
 import { Route as AuthenticatedAuthFleetImport } from './routes/_authenticated/_auth.fleet'
 import { Route as AuthenticatedAuthDashboardImport } from './routes/_authenticated/_auth.dashboard'
-import { Route as AuthenticatedAuthInvoicesIndexImport } from './routes/_authenticated/_auth.invoices.index'
-import { Route as AuthenticatedAuthInvoicesInvoicesIDImport } from './routes/_authenticated/_auth.invoices.$invoicesId'
 
 // Create/Update Routes
 
@@ -69,12 +66,6 @@ const AuthenticatedAuthenticatedRoute = AuthenticatedAuthenticatedImport.update(
   } as any,
 )
 
-const AuthenticatedAuthInvoicesRoute = AuthenticatedAuthInvoicesImport.update({
-  id: '/_authenticated/_auth/invoices',
-  path: '/invoices',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const AuthenticatedAuthFleetRoute = AuthenticatedAuthFleetImport.update({
   id: '/_authenticated/_auth/fleet',
   path: '/fleet',
@@ -88,20 +79,6 @@ const AuthenticatedAuthDashboardRoute = AuthenticatedAuthDashboardImport.update(
     getParentRoute: () => rootRoute,
   } as any,
 )
-
-const AuthenticatedAuthInvoicesIndexRoute =
-  AuthenticatedAuthInvoicesIndexImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => AuthenticatedAuthInvoicesRoute,
-  } as any)
-
-const AuthenticatedAuthInvoicesInvoicesIDRoute =
-  AuthenticatedAuthInvoicesInvoicesIDImport.update({
-    id: '/$invoicesID',
-    path: '/$invoicesID',
-    getParentRoute: () => AuthenticatedAuthInvoicesRoute,
-  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -170,48 +147,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAuthFleetImport
       parentRoute: typeof rootRoute
     }
-    '/_authenticated/_auth/invoices': {
-      id: '/_authenticated/_auth/invoices'
-      path: '/invoices'
-      fullPath: '/invoices'
-      preLoaderRoute: typeof AuthenticatedAuthInvoicesImport
-      parentRoute: typeof rootRoute
-    }
-    '/_authenticated/_auth/invoices/$invoicesID': {
-      id: '/_authenticated/_auth/invoices/$invoicesID'
-      path: '/$invoicesID'
-      fullPath: '/invoices/$invoicesID'
-      preLoaderRoute: typeof AuthenticatedAuthInvoicesInvoicesIDImport
-      parentRoute: typeof AuthenticatedAuthInvoicesImport
-    }
-    '/_authenticated/_auth/invoices/': {
-      id: '/_authenticated/_auth/invoices/'
-      path: '/'
-      fullPath: '/invoices/'
-      preLoaderRoute: typeof AuthenticatedAuthInvoicesIndexImport
-      parentRoute: typeof AuthenticatedAuthInvoicesImport
-    }
   }
 }
 
 // Create and export the route tree
-
-interface AuthenticatedAuthInvoicesRouteChildren {
-  AuthenticatedAuthInvoicesInvoicesIDRoute: typeof AuthenticatedAuthInvoicesInvoicesIDRoute
-  AuthenticatedAuthInvoicesIndexRoute: typeof AuthenticatedAuthInvoicesIndexRoute
-}
-
-const AuthenticatedAuthInvoicesRouteChildren: AuthenticatedAuthInvoicesRouteChildren =
-  {
-    AuthenticatedAuthInvoicesInvoicesIDRoute:
-      AuthenticatedAuthInvoicesInvoicesIDRoute,
-    AuthenticatedAuthInvoicesIndexRoute: AuthenticatedAuthInvoicesIndexRoute,
-  }
-
-const AuthenticatedAuthInvoicesRouteWithChildren =
-  AuthenticatedAuthInvoicesRoute._addFileChildren(
-    AuthenticatedAuthInvoicesRouteChildren,
-  )
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -223,9 +162,6 @@ export interface FileRoutesByFullPath {
   '': typeof AuthenticatedAuthenticatedRoute
   '/dashboard': typeof AuthenticatedAuthDashboardRoute
   '/fleet': typeof AuthenticatedAuthFleetRoute
-  '/invoices': typeof AuthenticatedAuthInvoicesRouteWithChildren
-  '/invoices/$invoicesID': typeof AuthenticatedAuthInvoicesInvoicesIDRoute
-  '/invoices/': typeof AuthenticatedAuthInvoicesIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -238,8 +174,6 @@ export interface FileRoutesByTo {
   '': typeof AuthenticatedAuthenticatedRoute
   '/dashboard': typeof AuthenticatedAuthDashboardRoute
   '/fleet': typeof AuthenticatedAuthFleetRoute
-  '/invoices/$invoicesID': typeof AuthenticatedAuthInvoicesInvoicesIDRoute
-  '/invoices': typeof AuthenticatedAuthInvoicesIndexRoute
 }
 
 export interface FileRoutesById {
@@ -253,9 +187,6 @@ export interface FileRoutesById {
   '/_authenticated/_authenticated': typeof AuthenticatedAuthenticatedRoute
   '/_authenticated/_auth/dashboard': typeof AuthenticatedAuthDashboardRoute
   '/_authenticated/_auth/fleet': typeof AuthenticatedAuthFleetRoute
-  '/_authenticated/_auth/invoices': typeof AuthenticatedAuthInvoicesRouteWithChildren
-  '/_authenticated/_auth/invoices/$invoicesID': typeof AuthenticatedAuthInvoicesInvoicesIDRoute
-  '/_authenticated/_auth/invoices/': typeof AuthenticatedAuthInvoicesIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -270,9 +201,6 @@ export interface FileRouteTypes {
     | ''
     | '/dashboard'
     | '/fleet'
-    | '/invoices'
-    | '/invoices/$invoicesID'
-    | '/invoices/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -284,8 +212,6 @@ export interface FileRouteTypes {
     | ''
     | '/dashboard'
     | '/fleet'
-    | '/invoices/$invoicesID'
-    | '/invoices'
   id:
     | '__root__'
     | '/'
@@ -297,9 +223,6 @@ export interface FileRouteTypes {
     | '/_authenticated/_authenticated'
     | '/_authenticated/_auth/dashboard'
     | '/_authenticated/_auth/fleet'
-    | '/_authenticated/_auth/invoices'
-    | '/_authenticated/_auth/invoices/$invoicesID'
-    | '/_authenticated/_auth/invoices/'
   fileRoutesById: FileRoutesById
 }
 
@@ -313,7 +236,6 @@ export interface RootRouteChildren {
   AuthenticatedAuthenticatedRoute: typeof AuthenticatedAuthenticatedRoute
   AuthenticatedAuthDashboardRoute: typeof AuthenticatedAuthDashboardRoute
   AuthenticatedAuthFleetRoute: typeof AuthenticatedAuthFleetRoute
-  AuthenticatedAuthInvoicesRoute: typeof AuthenticatedAuthInvoicesRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -326,7 +248,6 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedAuthenticatedRoute: AuthenticatedAuthenticatedRoute,
   AuthenticatedAuthDashboardRoute: AuthenticatedAuthDashboardRoute,
   AuthenticatedAuthFleetRoute: AuthenticatedAuthFleetRoute,
-  AuthenticatedAuthInvoicesRoute: AuthenticatedAuthInvoicesRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -347,8 +268,7 @@ export const routeTree = rootRoute
         "/solution",
         "/_authenticated/_authenticated",
         "/_authenticated/_auth/dashboard",
-        "/_authenticated/_auth/fleet",
-        "/_authenticated/_auth/invoices"
+        "/_authenticated/_auth/fleet"
       ]
     },
     "/": {
@@ -377,21 +297,6 @@ export const routeTree = rootRoute
     },
     "/_authenticated/_auth/fleet": {
       "filePath": "_authenticated/_auth.fleet.tsx"
-    },
-    "/_authenticated/_auth/invoices": {
-      "filePath": "_authenticated/_auth.invoices.tsx",
-      "children": [
-        "/_authenticated/_auth/invoices/$invoicesID",
-        "/_authenticated/_auth/invoices/"
-      ]
-    },
-    "/_authenticated/_auth/invoices/$invoicesID": {
-      "filePath": "_authenticated/_auth.invoices.$invoicesID.tsx",
-      "parent": "/_authenticated/_auth/invoices"
-    },
-    "/_authenticated/_auth/invoices/": {
-      "filePath": "_authenticated/_auth.invoices.index.tsx",
-      "parent": "/_authenticated/_auth/invoices"
     }
   }
 }
