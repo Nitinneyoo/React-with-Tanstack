@@ -17,10 +17,10 @@ interface HomeData {
 const fetchHomeData = async (): Promise<HomeData> => {
   await new Promise((resolve) => setTimeout(resolve, 500));
   return {
-    name: "Robotics Guard",
+    name: "Anscer Robotics",
     tagline: "The Future of Autonomous Security",
     description:
-      "Discover Robotics Guard, the cutting-edge robotic security system designed to protect homes, offices, and industrial facilities with unparalleled intelligence and precision.",
+      "Discover Anscer Robotics, the cutting-edge robotic security system designed to protect homes, offices, and industrial facilities with unparalleled intelligence and precision.",
     heroImageUrl:
       "https://images.pexels.com/photos/9242858/pexels-photo-9242858.jpeg?auto=compress&cs=tinysrgb&w=600",
     keyFeature: "Real-time threat detection with 99.9% accuracy",
@@ -112,7 +112,7 @@ const HeroSection = memo(
           <Link
             to="/about"
             className="mt-4 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 hover:shadow-lg transition transform hover:-translate-y-1"
-            aria-label="Learn More About Robotics Guard"
+            aria-label="Learn More About Anscer Robotics"
           >
             Learn More
           </Link>
@@ -140,7 +140,7 @@ const FeatureTeaser = memo(({ keyFeature }: { keyFeature: string }) => (
         as="h3"
         className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 flex items-center justify-center"
       >
-        Why Choose Robotics Guard?
+        Why Choose Anscer Robotics?
       </HomeAnimatedElement>
       <HomeAnimatedElement
         as="p"
@@ -231,7 +231,7 @@ const HomePage: FC = () => {
               className="text-base sm:text-lg text-gray-600 leading-relaxed flex"
             >
               Robots are advanced machines engineered to perform tasks with
-              precision and efficiency. Systems like Robotics Guard leverage
+              precision and efficiency. Systems like Anscer Robotics leverage
               cutting-edge AI, sensors, and automation to provide security and
               operational solutions. Industrial robots, including articulated
               robots, automated guided vehicles (AGVs), and pallet lifter
@@ -271,7 +271,7 @@ const HomePage: FC = () => {
               The robotics industry integrates engineering, AI, and software to
               create intelligent machines. It involves research, design,
               manufacturing, and deployment of robots tailored to specific
-              needs, such as security systems like Robotics Guard. Companies
+              needs, such as security systems like Anscer Robotics. Companies
               collaborate with system integrators to embed robots into
               operational workflows, using IoT and data analytics for seamless
               performance. Continuous innovation in machine learning and sensor
@@ -307,7 +307,7 @@ const HomePage: FC = () => {
               as="p"
               className="text-base sm:text-lg text-gray-600 leading-relaxed flex"
             >
-              Robotics security, as exemplified by Robotics Guard, uses advanced
+              Robotics security, as exemplified by Anscer Robotics, uses advanced
               sensors (e.g., cameras, LIDAR) and AI to monitor environments in
               real-time. These systems detect threats, such as unauthorized
               access or anomalies, with high accuracy. Secure communication
@@ -345,7 +345,7 @@ const HomePage: FC = () => {
               as="p"
               className="text-base sm:text-lg text-gray-600 leading-relaxed mb-6 flex"
             >
-              Robots like Robotics Guard revolutionize security and efficiency.
+              Robots like Anscer Robotics revolutionize security and efficiency.
               They automate surveillance, reduce operational costs, and enhance
               safety by handling dangerous tasks. In broader applications,
               robots streamline manufacturing, optimize logistics, and support

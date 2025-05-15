@@ -48,7 +48,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     []
   );
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+ 
   const logout = React.useCallback(async () => {
     setStoredUser(null);
     setUser(null);

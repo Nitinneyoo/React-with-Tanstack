@@ -1,8 +1,16 @@
-import { createRootRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
+import {
+  createRootRoute,
+  Link,
+  Outlet,
+  useNavigate,
+} from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
-import { useAuth } from "@/context/auth"; // Assuming Lucide icons are installed for hamburger/close icons
+import { useAuth } from "@/context/auth";
+
+import { motion } from "framer-motion";
+// Assuming Lucide icons are installed for hamburger/close icons
 
 export const Route = createRootRoute({
   component: Root,
@@ -24,10 +32,10 @@ function Root() {
   return (
     <>
       <nav className="bg-gray-900 text-white sticky top-0 z-50 shadow-lg">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center sm:md:lg:*:**:not-[]:">
           {/* Logo/Brand */}
           <Link to="/" className="text-2xl font-bold tracking-tight">
-            Robotics Guard
+            Anscer Robotics{" "}
           </Link>
 
           {/* Desktop Menu */}
@@ -76,13 +84,20 @@ function Root() {
                 >
                   Fleet
                 </Link>
-                {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
-                <button
+                <motion.button
+                  type="button"
                   onClick={handleLogout}
-                  className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:scale-105 transition-all duration-200 [&.active]:bg-blue-600 [&.active]:font-bold"
+                  className="bg-gradient-to-r from-red-500 to-rose-600 text-white font-semibold py-2 px-6 rounded-lg hover:from-red-600 hover:to-rose-700 transition duration-300"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  animate={{ opacity: [1, 0.8, 1] }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Number.POSITIVE_INFINITY,
+                  }}
                 >
-                  logout
-                </button>
+                  Log Out
+                </motion.button>
               </>
             ) : (
               <Link
@@ -144,6 +159,7 @@ function Root() {
             >
               Details
             </Link>
+
             <Link
               to="/login"
               className="block px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 transition-colors [&.active]:bg-blue-600 [&.active]:font-bold"

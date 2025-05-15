@@ -24,7 +24,7 @@ interface ProductDetails {
 const fetchProductData = async (): Promise<ProductDetails> => {
   await new Promise((resolve) => setTimeout(resolve, 500));
   return {
-    name: "Robotics Guard",
+    name: "Anscer Robotics",
     tagline: "The Future of Autonomous Security",
     description:
       "Robotics Guard is an advanced robotic security system designed to provide unparalleled protection and surveillance for homes, offices, and industrial facilities.",
