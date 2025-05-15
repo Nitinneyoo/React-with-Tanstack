@@ -26,8 +26,14 @@ interface AuthContext {
 const Dashboard: FC = () => {
   // const { logout }  = useAuth() as AuthContext;
   const auth = useAuth()
+  const {user} = useAuth()
+  const router = useRouter()
   // const router: Router = useRouter();
 
+  if (!user) {
+    router.navigate({ to: "/login" });
+    return null; // Prevent rendering until redirect
+  }
   // const handleLogout = (): void => {
   //   logout();
   //   router.invalidate();
@@ -235,14 +241,14 @@ const Dashboard: FC = () => {
 
       {/* Footer */}    
       <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             {/* <div className="mb-6 md:mb-0">
               <p className="text-sm font-medium ">
                 © 2025 RobotTech Inc. All rights reserved.
               </p>
             </div> */}
-            <Dock className="bg-gray-800/50 backdrop-blur-md rounded-full p-2 shadow-lg">
+            <Dock className="bg-gray-800/50 backdrop-blur-md rounded-full p-4 shadow-lg">
               <DockIcon>
                 <a
                   href="https://twitter.com"
@@ -255,7 +261,7 @@ const Dashboard: FC = () => {
               </DockIcon>
               <DockIcon>
                 <a
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/nitinneyoo/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-300 hover:text-white transition duration-300 p-2 rounded-full hover:bg-gray-700/50 hover:scale-110"
@@ -265,7 +271,7 @@ const Dashboard: FC = () => {
               </DockIcon>
               <DockIcon>
                 <a
-                  href="https://github.com"
+                  href="https://github.com/Nitinneyoo"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-300 hover:text-white transition duration-300 p-2 rounded-full hover:bg-gray-700/50 hover:scale-110"
@@ -275,7 +281,7 @@ const Dashboard: FC = () => {
               </DockIcon>
               <DockIcon>
                 <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/neyooo_27/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-300 hover:text-white transition duration-300 p-2 rounded-full hover:bg-gray-700/50 hover:scale-110"
