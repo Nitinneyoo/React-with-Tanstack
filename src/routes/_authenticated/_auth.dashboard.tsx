@@ -14,6 +14,7 @@ interface AuthContext {
   logout: () => Promise<void>;
 }
 
+
 const Dashboard: FC = () => {
   const { user, logout } = useAuth() as AuthContext;
   const router = useRouter();
@@ -30,10 +31,10 @@ const Dashboard: FC = () => {
   // };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+    <div className="min-h-screen bg-primary-foreground">
       {/* Header */}
       <header className="bg-white shadow-lg">
-        <div className="max-w-full py-4 px-2 flex justify-between items-center sticky top-0">
+        <div className=" flex justify-between items-center sticky top-0">
           <h1 className="text-2xl font-bold text-gray-900">Robot Dashboard</h1>
           <div className="flex items-center space-x-4">
             <Filter />

@@ -1,4 +1,8 @@
-import { createFileRoute, useParams, useNavigate } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  useParams,
+  useNavigate,
+} from "@tanstack/react-router";
 import { useAuth } from "@/context/auth";
 
 interface AuthContext {
@@ -30,7 +34,8 @@ function RobotNodePage() {
             Robots at {formattedNode} Node
           </h2>
           <p className="text-gray-700 leading-relaxed">
-            This page displays details about robots operating at the {formattedNode} node.
+            This page displays details about robots operating at the{" "}
+            {formattedNode} node.
           </p>
           {/* Placeholder for node data */}
           <div className="mt-4">
@@ -38,9 +43,12 @@ function RobotNodePage() {
               Robot data for the {formattedNode} node will be displayed here.
             </p>
           </div>
+          {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
           <button
             className="mt-4 text-blue-500 text-sm"
-            onClick={() => navigate({ to: "/_authenticated/_auth/robotFilter" })}
+            onClick={() =>
+              navigate({ to: "/_authenticated/_auth/robotFilter" })
+            }
           >
             Back to Filters
           </button>

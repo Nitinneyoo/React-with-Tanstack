@@ -1,7 +1,35 @@
-import { createFileRoute, useNavigate,redirect } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, redirect } from "@tanstack/react-router";
 import { useState } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import { useAuth } from "@/context/auth";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Label } from "@/components/ui/label";
+
+// Zod schema for login
+const loginSchema = z.object({
+  username: z.string().min(3, "Username must be at least 3 characters"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+});
+
+// Zod schema for signup
+const signupSchema = z
+  .object({
+    username: z.string().min(3, "Username must be at least 3 characters"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+// Types for form data
+type LoginFormData = z.infer<typeof loginSchema>;
+type SignupFormData = z.infer<typeof signupSchema>;
 
 export const Route = createFileRoute("/login")({
   beforeLoad: async ({ context }) => {
@@ -15,19 +43,36 @@ export const Route = createFileRoute("/login")({
 });
 
 function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const [mode, setMode] = useState<"login" | "signup">("login");
   const [showPassword, setShowPassword] = useState(false);
-  const { login } = useAuth();
+  const [error, setError] = useState<string | null>(null);
+  const { login, signup } = useAuth();
   const navigate = useNavigate();
   const search = Route.useSearch();
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Form setup for login
+  const loginForm = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
+
+  // Form setup for signup
+  const signupForm = useForm<SignupFormData>({
+    resolver: zodResolver(signupSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
+
+  const handleLogin = async (data: LoginFormData) => {
     setError(null);
     try {
-      await login(username, password);
+      await login(data.username, data.password);
       const redirectUrl = search.redirect || "/dashboard";
       navigate({ to: redirectUrl });
     } catch (err) {
@@ -35,13 +80,23 @@ function Login() {
     }
   };
 
+  const handleSignup = async (data: SignupFormData) => {
+    setError(null);
+    try {
+      await signup(data.username, data.password); // Assuming signup method exists in useAuth
+      navigate({ to: "/dashboard" });
+    } catch (err) {
+      setError("Signup failed. Username may already exist.");
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 p-4">
-      <div className="w-full max-w-md bg-gray-800 rounded-lg shadow-lg p-6">
-        <h1 className="text-2xl font-bold text-white text-center mb-6 tracking-tight">
-          Sign In
+    <div className="min-h-screen flex items-center justify-center bg-primary-foreground p-4">
+      <div className="w-full max-w-sm bg-primary-foreground rounded-lg shadow-2xl p-6 border-1">
+        <h1 className="text-2xl font-bold text-gray-600 text-center mb-6 tracking-tight shadow-2xl">
+          {mode === "login" ? "Sign In" : "Sign Up"}
         </h1>
-        {search.redirect && (
+        {search.redirect && mode === "login" && (
           <p className="bg-red-600 text-white text-center p-3 rounded-md mb-4 animate-fade-in text-sm">
             You must log in to access that page.
           </p>
@@ -51,48 +106,164 @@ function Login() {
             {error}
           </p>
         )}
-        <form onSubmit={handleLogin} className="flex flex-col gap-4">
-          <div>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter username"
-              className="w-full px-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 hover:bg-gray-600 transition-all duration-200 text-sm"
-            />
-          </div>
-          <div className="relative">
-            <input
-              type={showPassword ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter password"
-              className="w-full px-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 hover:bg-gray-600 transition-all duration-200 text-sm"
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
-            >
-              {showPassword ? (
-                <EyeSlashIcon className="h-5 w-5" />
-              ) : (
-                <EyeIcon className="h-5 w-5" />
-              )}
-            </button>
-          </div>
+
+        {/* Toggle between Login and Signup */}
+        <div className="flex justify-center mb-4">
+          {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
           <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-200 text-sm font-medium"
+            onClick={() => setMode("login")}
+            className={`px-4 py-2 text-sm font-medium rounded-l-md ${
+              mode === "login"
+                ? "bg-blue-600 text-gray-200"
+                : "bg-primary-foreground text-gray-600"
+            } transition-all duration-200`}
           >
-            Login
+            Sign In
           </button>
-        </form>
-        <p className="text-center mt-4 text-sm text-gray-400">
-          Use any username and password{" "}
-          <span className="font-medium text-blue-400">"password123"</span> to
-          login.
-        </p>
+          {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
+          <button
+            onClick={() => setMode("signup")}
+            className={`px-4 py-2 text-sm font-medium rounded-r-md ${
+              mode === "signup"
+                ? "bg-blue-600 text-gray-200"
+                : "bg-primary-foreground text-gray-600"
+            } transition-all duration-200`}
+          >
+            Sign Up
+          </button>
+        </div>
+
+        {/* Login Form */}
+        {mode === "login" && (
+          <form
+            onSubmit={loginForm.handleSubmit(handleLogin)}
+            className="flex flex-col gap-4"
+          >
+            <div>
+              <Label htmlFor="username" className="text-sm m-2 text-gray-600">
+                Username
+              </Label>
+              <Input
+                type="text"
+                {...loginForm.register("username")}
+                placeholder="Enter username"
+                className="w-full px-3 py-2 bg-primary-foreground text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-sm"
+              />
+              {loginForm.formState.errors.username && (
+                <p className="text-red-500 text-xs mt-1">
+                  {loginForm.formState.errors.username.message}
+                </p>
+              )}
+            </div>
+            <div className="relative ">
+              <Label htmlFor="password" className="text-sm m-2 text-gray-600">
+                Password
+              </Label>
+              <Input
+                type={showPassword ? "text" : "password"}
+                {...loginForm.register("password")}
+                placeholder="Enter password"
+                className="w-full px-3 py-2 bg-primary-foreground text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-sm"
+              />
+              <Button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-transparent mt-4 hover:bg-primary-foreground hover:bg-opacity-50 rounded-md p-1"
+              >
+                {showPassword ? (
+                  <EyeSlashIcon className="h-5 w-5 text-black" />
+                ) : (
+                  <EyeIcon className="h-5 w-5 text-black " />
+                )}
+              </Button>
+              {loginForm.formState.errors.password && (
+                <p className="text-red-500 text-xs mt-1">
+                  {loginForm.formState.errors.password.message}
+                </p>
+              )}
+            </div>
+            <Button
+              type="submit"
+              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-200 text-sm font-medium"
+            >
+              Login
+            </Button>
+          </form>
+        )}
+
+        {/* Signup Form */}
+        {mode === "signup" && (
+          <form
+            onSubmit={signupForm.handleSubmit(handleSignup)}
+            className="flex flex-col gap-4"
+          >
+            <div>
+              <Label htmlFor="username" className="text-sm m-2 text-gray-600">
+                Username
+              </Label>
+              <Input
+                type="text"
+                {...signupForm.register("username")}
+                placeholder="Enter username"
+                className="w-full px-3 py-2 bg-primary-foreground text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-sm"
+              />
+              {signupForm.formState.errors.username && (
+                <p className="text-red-500 text-xs mt-1">
+                  {signupForm.formState.errors.username.message}
+                </p>
+              )}
+            </div>
+            <div className="relative">
+              <Label htmlFor="password" className="text-sm m-2 text-gray-600">
+                Password
+              </Label>
+              <Input
+                type={showPassword ? "text" : "password"}
+                {...signupForm.register("password")}
+                placeholder="Enter password"
+                className="w-full px-3 py-2 bg-primary-foreground text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-sm"
+              />
+              <Button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-transparent mt-4 hover:bg-primary-foreground hover:bg-opacity-50 rounded-md p-1"
+              >
+                {showPassword ? (
+                  <EyeSlashIcon className="h-5 w-5 text-black" />
+                ) : (
+                  <EyeIcon className="h-5 w-5 text-black" />
+                )}
+              </Button>
+              {signupForm.formState.errors.password && (
+                <p className="text-red-500 text-xs mt-1">
+                  {signupForm.formState.errors.password.message}
+                </p>
+              )}
+            </div>
+            <div>
+              <Label htmlFor="confirmPassword" className="text-sm m-2 text-gray-600">
+                Confirm Password
+                </Label>
+              <Input
+                type={showPassword ? "text" : "password"}
+                {...signupForm.register("confirmPassword")}
+                placeholder="Confirm password"
+                className="w-full px-3 py-2 bg-primary-foreground text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-sm"
+              />
+              {signupForm.formState.errors.confirmPassword && (
+                <p className="text-red-500 text-xs mt-1">
+                  {signupForm.formState.errors.confirmPassword.message}
+                </p>
+              )}
+            </div>
+            <Button
+              type="submit"
+              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-200 text-sm font-medium"
+            >
+              Sign Up
+            </Button>
+          </form>
+        )}
       </div>
     </div>
   );

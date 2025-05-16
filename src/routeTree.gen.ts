@@ -19,6 +19,7 @@ import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 import { Route as ComponentsRobotFilterImport } from './routes/components/robotFilter'
 import { Route as AuthenticatedAuthenticatedImport } from './routes/_authenticated/_authenticated'
+import { Route as AuthenticatedAuthRobotFilterImport } from './routes/_authenticated/_auth.robotFilter'
 import { Route as AuthenticatedAuthFleetImport } from './routes/_authenticated/_auth.fleet'
 import { Route as AuthenticatedAuthDashboardImport } from './routes/_authenticated/_auth.dashboard'
 import { Route as AuthenticatedAuthRobotsTypeImport } from './routes/_authenticated/_auth.robots.$type'
@@ -74,6 +75,13 @@ const AuthenticatedAuthenticatedRoute = AuthenticatedAuthenticatedImport.update(
     getParentRoute: () => rootRoute,
   } as any,
 )
+
+const AuthenticatedAuthRobotFilterRoute =
+  AuthenticatedAuthRobotFilterImport.update({
+    id: '/_authenticated/_auth/robotFilter',
+    path: '/robotFilter',
+    getParentRoute: () => rootRoute,
+  } as any)
 
 const AuthenticatedAuthFleetRoute = AuthenticatedAuthFleetImport.update({
   id: '/_authenticated/_auth/fleet',
@@ -178,6 +186,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAuthFleetImport
       parentRoute: typeof rootRoute
     }
+    '/_authenticated/_auth/robotFilter': {
+      id: '/_authenticated/_auth/robotFilter'
+      path: '/robotFilter'
+      fullPath: '/robotFilter'
+      preLoaderRoute: typeof AuthenticatedAuthRobotFilterImport
+      parentRoute: typeof rootRoute
+    }
     '/_authenticated/_auth/nodes/$node': {
       id: '/_authenticated/_auth/nodes/$node'
       path: '/nodes/$node'
@@ -208,6 +223,7 @@ export interface FileRoutesByFullPath {
   '/components/robotFilter': typeof ComponentsRobotFilterRoute
   '/dashboard': typeof AuthenticatedAuthDashboardRoute
   '/fleet': typeof AuthenticatedAuthFleetRoute
+  '/robotFilter': typeof AuthenticatedAuthRobotFilterRoute
   '/nodes/$node': typeof AuthenticatedAuthNodesNodeRoute
   '/robots/$type': typeof AuthenticatedAuthRobotsTypeRoute
 }
@@ -223,6 +239,7 @@ export interface FileRoutesByTo {
   '/components/robotFilter': typeof ComponentsRobotFilterRoute
   '/dashboard': typeof AuthenticatedAuthDashboardRoute
   '/fleet': typeof AuthenticatedAuthFleetRoute
+  '/robotFilter': typeof AuthenticatedAuthRobotFilterRoute
   '/nodes/$node': typeof AuthenticatedAuthNodesNodeRoute
   '/robots/$type': typeof AuthenticatedAuthRobotsTypeRoute
 }
@@ -239,6 +256,7 @@ export interface FileRoutesById {
   '/components/robotFilter': typeof ComponentsRobotFilterRoute
   '/_authenticated/_auth/dashboard': typeof AuthenticatedAuthDashboardRoute
   '/_authenticated/_auth/fleet': typeof AuthenticatedAuthFleetRoute
+  '/_authenticated/_auth/robotFilter': typeof AuthenticatedAuthRobotFilterRoute
   '/_authenticated/_auth/nodes/$node': typeof AuthenticatedAuthNodesNodeRoute
   '/_authenticated/_auth/robots/$type': typeof AuthenticatedAuthRobotsTypeRoute
 }
@@ -256,6 +274,7 @@ export interface FileRouteTypes {
     | '/components/robotFilter'
     | '/dashboard'
     | '/fleet'
+    | '/robotFilter'
     | '/nodes/$node'
     | '/robots/$type'
   fileRoutesByTo: FileRoutesByTo
@@ -270,6 +289,7 @@ export interface FileRouteTypes {
     | '/components/robotFilter'
     | '/dashboard'
     | '/fleet'
+    | '/robotFilter'
     | '/nodes/$node'
     | '/robots/$type'
   id:
@@ -284,6 +304,7 @@ export interface FileRouteTypes {
     | '/components/robotFilter'
     | '/_authenticated/_auth/dashboard'
     | '/_authenticated/_auth/fleet'
+    | '/_authenticated/_auth/robotFilter'
     | '/_authenticated/_auth/nodes/$node'
     | '/_authenticated/_auth/robots/$type'
   fileRoutesById: FileRoutesById
@@ -300,6 +321,7 @@ export interface RootRouteChildren {
   ComponentsRobotFilterRoute: typeof ComponentsRobotFilterRoute
   AuthenticatedAuthDashboardRoute: typeof AuthenticatedAuthDashboardRoute
   AuthenticatedAuthFleetRoute: typeof AuthenticatedAuthFleetRoute
+  AuthenticatedAuthRobotFilterRoute: typeof AuthenticatedAuthRobotFilterRoute
   AuthenticatedAuthNodesNodeRoute: typeof AuthenticatedAuthNodesNodeRoute
   AuthenticatedAuthRobotsTypeRoute: typeof AuthenticatedAuthRobotsTypeRoute
 }
@@ -315,6 +337,7 @@ const rootRouteChildren: RootRouteChildren = {
   ComponentsRobotFilterRoute: ComponentsRobotFilterRoute,
   AuthenticatedAuthDashboardRoute: AuthenticatedAuthDashboardRoute,
   AuthenticatedAuthFleetRoute: AuthenticatedAuthFleetRoute,
+  AuthenticatedAuthRobotFilterRoute: AuthenticatedAuthRobotFilterRoute,
   AuthenticatedAuthNodesNodeRoute: AuthenticatedAuthNodesNodeRoute,
   AuthenticatedAuthRobotsTypeRoute: AuthenticatedAuthRobotsTypeRoute,
 }
@@ -339,6 +362,7 @@ export const routeTree = rootRoute
         "/components/robotFilter",
         "/_authenticated/_auth/dashboard",
         "/_authenticated/_auth/fleet",
+        "/_authenticated/_auth/robotFilter",
         "/_authenticated/_auth/nodes/$node",
         "/_authenticated/_auth/robots/$type"
       ]
@@ -372,6 +396,9 @@ export const routeTree = rootRoute
     },
     "/_authenticated/_auth/fleet": {
       "filePath": "_authenticated/_auth.fleet.tsx"
+    },
+    "/_authenticated/_auth/robotFilter": {
+      "filePath": "_authenticated/_auth.robotFilter.tsx"
     },
     "/_authenticated/_auth/nodes/$node": {
       "filePath": "_authenticated/_auth.nodes.$node.tsx"

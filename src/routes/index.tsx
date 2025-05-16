@@ -94,7 +94,7 @@ const HeroSection = memo(
     description: string;
     heroImageUrl: string;
   }) => (
-    <section className="bg-white py-12 sm:py-16 mb-4 sm:mb-12 min-h-fit">
+    <section className="bg-primary-foreground py-12 sm:py-16 sm:mb-12 min-h-fit">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-8">
         <div className="md:w-1/2">
           <HomeAnimatedElement
@@ -134,7 +134,7 @@ const HeroSection = memo(
 );
 
 const FeatureTeaser = memo(({ keyFeature }: { keyFeature: string }) => (
-  <section className="py-12 sm:py-16 bg-gray-50 mb-4 sm:mb-12 min-h-fit">
+  <section className="py-12 sm:py-16 bg-primary-foreground mb-4 sm:mb-12 min-h-fit">
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <HomeAnimatedElement
         as="h3"
@@ -160,7 +160,7 @@ const FeatureTeaser = memo(({ keyFeature }: { keyFeature: string }) => (
 ));
 
 const LoadingSpinner: FC = () => (
-  <div className="flex justify-center items-center h-screen bg-gray-100">
+  <div className="flex justify-center items-center h-screen bg-primary-foreground">
     <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-600" />
   </div>
 );
@@ -294,7 +294,7 @@ const HomePage: FC = () => {
       </section>
 
       {/* How Robotics Security Works */}
-      <section className="py-12 sm:py-16 bg-white mb-4 sm:mb-12 min-h-fit">
+      <section className="py-12 sm:py-16 bg-white sm:mb-12 min-h-fit">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-8">
           <div className="md:w-1/2">
             <HomeAnimatedElement
@@ -332,7 +332,7 @@ const HomePage: FC = () => {
       </section>
 
       {/* How Robots Can Help Us */}
-      <section className="py-12 sm:py-16 bg-gray-50 mb-4 sm:mb-12 min-h-fit">
+      <section className="py-10 sm:py-16 bg-gray-50  sm:mb-12 min-h-fit">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row-reverse items-center gap-8">
           <div className="md:w-1/2">
             <HomeAnimatedElement
