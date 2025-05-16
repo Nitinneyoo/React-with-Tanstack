@@ -123,7 +123,7 @@ function Root() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-gray-800 px-4 py-2">
+          <div className="md:hidden lg:hidden bg-gray-800 px-4 py-2">
             <Link
               to="/"
               className="block px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 transition-colors [&.active]:bg-blue-600 [&.active]:font-bold"

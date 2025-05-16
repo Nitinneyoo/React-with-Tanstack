@@ -1,41 +1,30 @@
-import {
-  createFileRoute,
-  useRouter,
-  type Router,
-} from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useAuth } from "@/context/auth";
 import { Dock, DockIcon } from "@/components/magicui/dock";
-import { Twitter, Linkedin, Github, Instagram, Mail, LogOut } from "lucide-react";
+import { Twitter, Linkedin, Github, Instagram, Mail } from "lucide-react";
 import { motion } from "framer-motion";
-import type { FC } from "react";
+// biome-ignore lint/style/useImportType: <explanation>
+import { type FC } from "react";
+// import { Filter } from "lucide-react";
+import Filter from "../components/robotFilter";
 
 // Define types for useAuth hook
 interface AuthContext {
+  user: unknown; // Replace with actual user type (e.g., { id: string; name: string })
   logout: () => Promise<void>;
 }
 
-// Define props for Dock and DockIcon (if not provided by magicui)
-// interface DockProps {
-//   className?: string;
-// }
-
-// interface DockIconProps {
-//   children: React.ReactNode;
-// }
-
 const Dashboard: FC = () => {
-  // const { logout }  = useAuth() as AuthContext;
-  const auth = useAuth()
-  const {user} = useAuth()
-  const router = useRouter()
-  // const router: Router = useRouter();
+  const { user, logout } = useAuth() as AuthContext;
+  const router = useRouter();
 
   if (!user) {
     router.navigate({ to: "/login" });
     return null; // Prevent rendering until redirect
   }
-  // const handleLogout = (): void => {
-  //   logout();
+
+  // const handleLogout = async () => {
+  //   await logout();
   //   router.invalidate();
   //   router.navigate({ to: "/" });
   // };
@@ -44,21 +33,22 @@ const Dashboard: FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
       {/* Header */}
       <header className="bg-white shadow-lg">
-        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
-            Robot Dashboard
-          </h1>
-          {/* <motion.button
-            type="button"
-            onClick={handleLogout}
-            className="bg-gradient-to-r from-red-500 to-rose-600 text-white font-semibold py-2 px-6 rounded-lg hover:from-red-600 hover:to-rose-700 transition duration-300"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            animate={{ opacity: [1, 0.8, 1] }}
-            transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
-          >
-            Log Out
-          </motion.button> */}
+        <div className="max-w-full py-4 px-2 flex justify-between items-center sticky top-0">
+          <h1 className="text-2xl font-bold text-gray-900">Robot Dashboard</h1>
+          <div className="flex items-center space-x-4">
+            <Filter />
+            {/* <motion.button
+              type="button"
+              onClick={handleLogout}
+              className="bg-gradient-to-r from-red-500 to-rose-600 text-white font-semibold py-2 px-6 rounded-lg hover:from-red-600 hover:to-rose-700 transition duration-300"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              animate={{ opacity: [1, 0.8, 1] }}
+              transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
+            >
+              Log Out
+            </motion.button> */}
+          </div>
         </div>
       </header>
 
@@ -73,7 +63,7 @@ const Dashboard: FC = () => {
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Welcome to the Robot Dashboard {auth.user}
+              Welcome to the Robot Dashboard
             </h2>
             <p className="text-gray-700 leading-relaxed">
               Dive into the exciting world of robotics! Discover how robots
@@ -239,15 +229,10 @@ const Dashboard: FC = () => {
         </div>
       </main>
 
-      {/* Footer */}    
+      {/* Footer */}
       <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            {/* <div className="mb-6 md:mb-0">
-              <p className="text-sm font-medium ">
-                © 2025 RobotTech Inc. All rights reserved.
-              </p>
-            </div> */}
             <Dock className="bg-gray-800/50 backdrop-blur-md rounded-full p-4 shadow-lg">
               <DockIcon>
                 <a
@@ -305,9 +290,6 @@ const Dashboard: FC = () => {
   );
 };
 
-export default Dashboard;
-
-// Define Route after Dashboard
 export const Route = createFileRoute("/_authenticated/_auth/dashboard")({
   component: Dashboard,
 });
