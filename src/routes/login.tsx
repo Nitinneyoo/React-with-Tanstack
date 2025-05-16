@@ -93,10 +93,10 @@ function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-primary-foreground p-4">
       <div className="w-full max-w-sm bg-primary-foreground rounded-lg shadow-2xl p-6 border-1">
-        <h1 className="text-2xl font-bold text-gray-600 text-center mb-6 tracking-tight shadow-2xl">
-          {mode === "login" ? "Sign In" : "Sign Up"}
+         <h1 className="text-2xl font-bold text-gray-600 text-center mb-6 tracking-tight shadow-2xl">
+          Dash Board
         </h1>
-        {search.redirect && mode === "login" && (
+        {/* {search.redirect && mode === "login" && (
           <p className="bg-red-600 text-white text-center p-3 rounded-md mb-4 animate-fade-in text-sm">
             You must log in to access that page.
           </p>
@@ -105,7 +105,7 @@ function Login() {
           <p className="bg-red-600 text-white text-center p-3 rounded-md mb-4 animate-fade-in text-sm">
             {error}
           </p>
-        )}
+        )}  */}
 
         {/* Toggle between Login and Signup */}
         <div className="flex justify-center mb-4">
@@ -115,7 +115,7 @@ function Login() {
             className={`px-4 py-2 text-sm font-medium rounded-l-md ${
               mode === "login"
                 ? "bg-blue-600 text-gray-200"
-                : "bg-primary-foreground text-gray-600"
+                : "bg-primary-foreground text-gray-600 cursor-pointer border-1"
             } transition-all duration-200`}
           >
             Sign In
@@ -126,7 +126,7 @@ function Login() {
             className={`px-4 py-2 text-sm font-medium rounded-r-md ${
               mode === "signup"
                 ? "bg-blue-600 text-gray-200"
-                : "bg-primary-foreground text-gray-600"
+                : "bg-primary-foreground text-gray-600 cursor-pointer border-1"
             } transition-all duration-200`}
           >
             Sign Up
@@ -147,7 +147,7 @@ function Login() {
                 type="text"
                 {...loginForm.register("username")}
                 placeholder="Enter username"
-                className="w-full px-3 py-2 bg-primary-foreground text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-sm"
+                className="w-full px-3 py-2 bg-primary-foreground text-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-sm"
               />
               {loginForm.formState.errors.username && (
                 <p className="text-red-500 text-xs mt-1">
@@ -163,12 +163,12 @@ function Login() {
                 type={showPassword ? "text" : "password"}
                 {...loginForm.register("password")}
                 placeholder="Enter password"
-                className="w-full px-3 py-2 bg-primary-foreground text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-sm"
+                className="w-full px-3 py-2 bg-primary-foreground text-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-sm"
               />
               <Button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-transparent mt-4 hover:bg-primary-foreground hover:bg-opacity-50 rounded-md p-1"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-transparent mt-4 hover:bg-primary-foreground hover:bg-opacity-100 rounded-md"
               >
                 {showPassword ? (
                   <EyeSlashIcon className="h-5 w-5 text-black" />
@@ -205,7 +205,7 @@ function Login() {
                 type="text"
                 {...signupForm.register("username")}
                 placeholder="Enter username"
-                className="w-full px-3 py-2 bg-primary-foreground text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-sm"
+                className="w-full px-3 py-2 bg-primary-foreground text-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-sm"
               />
               {signupForm.formState.errors.username && (
                 <p className="text-red-500 text-xs mt-1">
@@ -221,7 +221,7 @@ function Login() {
                 type={showPassword ? "text" : "password"}
                 {...signupForm.register("password")}
                 placeholder="Enter password"
-                className="w-full px-3 py-2 bg-primary-foreground text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-sm"
+                className="w-full px-3 py-2 bg-primary-foreground text-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-sm"
               />
               <Button
                 type="button"
@@ -248,7 +248,7 @@ function Login() {
                 type={showPassword ? "text" : "password"}
                 {...signupForm.register("confirmPassword")}
                 placeholder="Confirm password"
-                className="w-full px-3 py-2 bg-primary-foreground text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-sm"
+                className="w-full px-3 py-2 bg-primary-foreground text-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-sm"
               />
               {signupForm.formState.errors.confirmPassword && (
                 <p className="text-red-500 text-xs mt-1">

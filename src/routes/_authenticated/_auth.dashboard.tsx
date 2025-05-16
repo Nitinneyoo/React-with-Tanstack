@@ -35,8 +35,8 @@ const Dashboard: FC = () => {
       {/* Header */}
       <header className="bg-white shadow-lg">
         <div className=" flex justify-between items-center sticky top-0">
-          <h1 className="text-2xl font-bold text-gray-900">Robot Dashboard</h1>
-          <div className="flex items-center space-x-4">
+          <h1 className="text-2xl font-bold text-gray-900 ml-4">Robot Dashboard</h1>
+          <div className="flex items-center">
             <Filter />
             {/* <motion.button
               type="button"

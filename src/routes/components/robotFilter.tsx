@@ -17,7 +17,7 @@ interface FilterState {
   node3: boolean;
 }
 
-export default function Filter() {
+const RobotFilterPage = () => {
   const navigate = useNavigate();
   const [filters, setFilters] = useState<FilterState>({
     type1: false,
@@ -27,7 +27,7 @@ export default function Filter() {
     node2: false,
     node3: false,
   });
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // Explicitly control popover open state
 
   const handleCheckboxChange = (key: keyof FilterState) => {
     setFilters((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -56,130 +56,140 @@ export default function Filter() {
   };
 
   return (
-    <div className="flex flex-col items-start">
-      <Popover open={isOpen} onOpenChange={setIsOpen}>
-        <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            className="text-black font-semibold py-2 px-4 rounded-md border border-gray-300"
-            onClick={() => setIsOpen(true)}
-          >
-            Filter
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent
-          className="w-80 max-w-[90vw] p-3 bg-white rounded-md shadow-lg border border-gray-300"
-          sideOffset={3}
-          align="end"
-        >
-          <div className="space-y-3">
-            <div className="flex space-x-6">
-              {/* Type Category */}
-              <div>
-                <h3 className="font-semibold text-sm mb-2 justify-center flex">Type</h3>
-                <div className="space-y-1">
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="type1"
-                      checked={filters.type1}
-                      onCheckedChange={() => handleCheckboxChange("type1")}
-                    />
-                    <label htmlFor="type1" className="text-sm">
-                      Autonomous
-                    </label>
+    <div className="w-full bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+      <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 overflow-x-hidden">
+        <div className="bg-white p-2 rounded-md overflow-hidden">
+          <div className="flex flex-col items-start">
+            <Popover open={isOpen} onOpenChange={setIsOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="text-black font-semibold py-2 px-4 rounded-md border border-gray-300"
+                  onClick={() => setIsOpen(true)} // Open popover on click
+                >
+                  Filter
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent
+                className="w-80 max-w-[90vw] p-3 bg-white rounded-md shadow-lg border border-gray-300"
+                sideOffset={3}
+                align="end"
+              >
+                <div className="space-y-3">
+                  <div className="flex space-x-6">
+                    {/* Type Category */}
+                    <div>
+                      <h3 className="font-semibold text-sm mb-2 justify-center flex">Type</h3>
+                      <div className="space-y-1">
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="type1"
+                            checked={filters.type1}
+                            onCheckedChange={() => handleCheckboxChange("type1")}
+                          />
+                          <label htmlFor="type1" className="text-sm">
+                            Autonomous
+                          </label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="type2"
+                            checked={filters.type2}
+                            onCheckedChange={() => handleCheckboxChange("type2")}
+                          />
+                          <label htmlFor="type2" className="text-sm">
+                            Manual
+                          </label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="type3"
+                            checked={filters.type3}
+                            onCheckedChange={() => handleCheckboxChange("type3")}
+                          />
+                          <label htmlFor="type3" className="text-sm">
+                            Hybrid
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    {/* Node Category */}
+                    <div>
+                      <h3 className="font-semibold text-sm mb-2 flex justify-center">Node</h3>
+                      <div className="space-y-1">
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="node1"
+                            checked={filters.node1}
+                            onCheckedChange={() => handleCheckboxChange("node1")}
+                          />
+                          <label htmlFor="node1" className="text-sm">
+                            Warehouse
+                          </label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="node2"
+                            checked={filters.node2}
+                            onCheckedChange={() => handleCheckboxChange("node2")}
+                          />
+                          <label htmlFor="node2" className="text-sm">
+                            Depot
+                          </label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="node3"
+                            checked={filters.node3}
+                            onCheckedChange={() => handleCheckboxChange("node3")}
+                          />
+                          <label htmlFor="node3" className="text-sm">
+                            Hub
+                          </label>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="type2"
-                      checked={filters.type2}
-                      onCheckedChange={() => handleCheckboxChange("type2")}
-                    />
-                    <label htmlFor="type2" className="text-sm">
-                      Manual
-                    </label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="type3"
-                      checked={filters.type3}
-                      onCheckedChange={() => handleCheckboxChange("type3")}
-                    />
-                    <label htmlFor="type3" className="text-sm">
-                      Hybrid
-                    </label>
+                  {/* Reset and Select Buttons */}
+                  <div className="flex justify-end space-x-2 pt-3">
+                    <Button
+                      variant="outline"
+                      className="text-sm"
+                      onClick={() =>
+                        setFilters({
+                          type1: false,
+                          type2: false,
+                          type3: false,
+                          node1: false,
+                          node2: false,
+                          node3: false,
+                        })
+                      }
+                    >
+                      Reset
+                    </Button>
+                    <Button
+                      variant="default"
+                      className="text-sm"
+                      onClick={handleSelect} // Updated to handle navigation
+                    >
+                      Select
+                    </Button>
                   </div>
                 </div>
-              </div>
-              {/* Node Category */}
-              <div>
-                <h3 className="font-semibold text-sm mb-2 flex justify-center">Node</h3>
-                <div className="space-y-1">
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="node1"
-                      checked={filters.node1}
-                      onCheckedChange={() => handleCheckboxChange("node1")}
-                    />
-                    <label htmlFor="node1" className="text-sm">
-                      Warehouse
-                    </label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="node2"
-                      checked={filters.node2}
-                      onCheckedChange={() => handleCheckboxChange("node2")}
-                    />
-                    <label htmlFor="node2" className="text-sm">
-                      Depot
-                    </label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="node3"
-                      checked={filters.node3}
-                      onCheckedChange={() => handleCheckboxChange("node3")}
-                    />
-                    <label htmlFor="node3" className="text-sm">
-                      Hub
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Reset and Select Buttons */}
-            <div className="flex justify-end space-x-2 pt-3">
-              <Button
-                variant="outline"
-                className="text-sm"
-                onClick={() =>
-                  setFilters({
-                    type1: false,
-                    type2: false,
-                    type3: false,
-                    node1: false,
-                    node2: false,
-                    node3: false,
-                  })
-                }
-              >
-                Reset
-              </Button>
-              <Button
-                variant="default"
-                className="text-sm"
-                onClick={handleSelect} // Updated to handle navigation
-              >
-                Select
-              </Button>
-            </div>
+              </PopoverContent>
+            </Popover>
+            {/* Show selected filters below */}
+            
           </div>
-        </PopoverContent>
-      </Popover>
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default RobotFilterPage;
 
 export const Route = createFileRoute("/components/robotFilter")({
-  component: Filter,
+  component: RobotFilterPage,
 });
